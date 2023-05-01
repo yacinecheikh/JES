@@ -50,6 +50,16 @@ def allow(values, parser):
             return i, data
 
 
+def oneof(parsers):
+    def parse(src, i):
+        for p in parsers:
+            result = p(src, i)
+            if result is not None:
+                return result
+
+    return parse
+
+
 """
 Custom combinators to ease parser development
 """
