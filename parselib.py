@@ -5,25 +5,29 @@ a parser is a function with the following signature:
 (source: str, position: int) -> None or (position: int, object)
 """
 
-
 """
 Base parser
 
 This parser, although simple, helps guarantee the absence of bugs in further parsers,
 by not manually writing index manipulation code.
 """
-def char(src, i):
+
+
+def basechar(src, i):
     if i >= len(src):
         return None
     return i + 1, src[i]
+
 
 """
 Parser combinators
 
 These functions take parsers as input and generate new parsers
 """
+
+
 def concat(*parsers):
-    def parser(src, i):
+    def parse(src, i):
         parsed = []
         for p in parsers:
             result = p(src, i)
@@ -32,14 +36,28 @@ def concat(*parsers):
             i, data = result
             parsed.append(data)
         return i, parsed
-    return parser
+
+    return parse
+
+
+def allow(values, parser):
+    def parse(src, i):
+        result = parser(src, i)
+        if result is None:
+            return None
+        i, data = result
+        if data in values:
+            return i, data
+
 
 """
 Custom combinators to ease parser development
 """
+
+
 def keyword(word):
     letters = []
     for ch in word:
-        letters.append(allow(ch, char))
+        letters.append(allow([ch], basechar))
 
     return concat(*letters)
