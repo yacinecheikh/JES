@@ -10,3 +10,15 @@ def char(src, i):
         return None
     return i + 1, src[i]
 
+def concat(*parsers):
+    def parser(src, i):
+        parsed = []
+        for p in parsers:
+            result = p(src, i)
+            if result is None:
+                return None
+            i, data = result
+            parsed.append(data)
+        return i, parsed
+    return parser
+
