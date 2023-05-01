@@ -50,6 +50,19 @@ def oneof(*parsers):
     return parse
 
 
+def star(parser):
+    """repeat parsing until it's not possible anymore"""
+    def parse(src, i):
+        parsed = []
+        while True:
+            result = parser(src, i)
+            if result is None:
+                return i, parsed
+            i, data = result
+            parsed.append(data)
+    return parse
+
+
 def opt(parser):
     def parse(src, i):
         result = parser(src, i)

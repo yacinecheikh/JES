@@ -51,3 +51,7 @@ block parsers
 """
 expressions
 """
+
+expression = lib.defer()
+
+nested_expression = concat(paren_open, softspace, expression, softspace, )
