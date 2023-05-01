@@ -33,3 +33,13 @@ def concat(*parsers):
             parsed.append(data)
         return i, parsed
     return parser
+
+"""
+Custom combinators to ease parser development
+"""
+def keyword(word):
+    letters = []
+    for ch in word:
+        letters.append(allow(ch, char))
+
+    return concat(*letters)
