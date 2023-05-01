@@ -36,6 +36,9 @@ space = keyword(" ")
 tab = keyword("\t")
 newline = keyword("\n")
 
+# separators can be optional or required
+# example for optional separators: f ( x ) (f(x))
+# example for required separators: x=1 y=2 (x=1y=2)
 hardspace = oneof(space, tab, newline)
 softspace = opt(hardspace)
 
