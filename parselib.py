@@ -127,6 +127,11 @@ def blacklist(values, parser):
     return cond(lambda x: x not in values, parser)
 
 
+def many(parser):
+    """Similar to star(parser), but requires at least 1 result"""
+    return cond(lambda results: len(results) > 0, star(parser))
+
+
 def keyword(word):
     # parser for a sequence of determined characters
     letters = []
