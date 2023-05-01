@@ -61,6 +61,14 @@ def opt(parser):
     return parse
 
 
+class defer:
+    """Late binded parser. Needed for recursive parsing rules"""
+    def __init__(self):
+        self.parser = None
+    def __call__(self, *args, **kwargs):
+        self.parser(*args, **kwargs)
+
+
 """
 functional programming
 """
