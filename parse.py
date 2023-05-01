@@ -4,7 +4,7 @@ Generate a syntactic tree from source code
 """
 
 import parselib as lib
-from parselib import keyword, oneof, opt
+from parselib import keyword, oneof, opt, many, star
 
 """
 static lexer tokens 
@@ -37,10 +37,12 @@ tab = keyword("\t")
 newline = keyword("\n")
 
 # separators can be optional or required
-# example for optional separators: f ( x ) (f(x))
-# example for required separators: x=1 y=2 (x=1y=2)
-hardspace = oneof(space, tab, newline)
-softspace = opt(hardspace)
+# example for optional spaces: f ( x ) (f(x))
+# example for required spaces: x=1 y=2 (x=1y=2)
+blank = oneof(space, tab, newline)
+
+hardsep = many(blank)
+softsep = star(blank)
 
 
 """
