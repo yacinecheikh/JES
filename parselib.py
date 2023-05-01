@@ -50,7 +50,7 @@ def allow(values, parser):
             return i, data
 
 
-def oneof(parsers):
+def oneof(*parsers):
     def parse(src, i):
         for p in parsers:
             result = p(src, i)
