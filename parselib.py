@@ -40,16 +40,6 @@ def concat(*parsers):
     return parse
 
 
-def allow(values, parser):
-    def parse(src, i):
-        result = parser(src, i)
-        if result is None:
-            return None
-        i, data = result
-        if data in values:
-            return i, data
-
-
 def oneof(*parsers):
     def parse(src, i):
         for p in parsers:
@@ -67,6 +57,33 @@ def opt(parser):
             # successfully parsed nothing
             return i, None
         return result
+
+    return parse
+
+
+"""
+functional programming
+"""
+
+
+def process(f, parser):
+    def parse(src, i):
+        result = parser(src, i)
+        if result is not None:
+            i, data = result
+            return i, f(data)
+
+    return parse
+
+
+def allow(values, parser):
+    def parse(src, i):
+        result = parser(src, i)
+        if result is None:
+            return None
+        i, data = result
+        if data in values:
+            return i, data
 
 
 """
