@@ -56,6 +56,7 @@ Custom combinators to ease parser development
 
 
 def keyword(word):
+    # parser for a sequence of determined characters
     letters = []
     for ch in word:
         letters.append(allow([ch], basechar))
