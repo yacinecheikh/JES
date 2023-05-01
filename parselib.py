@@ -52,6 +52,7 @@ def oneof(*parsers):
 
 def star(parser):
     """repeat parsing until it's not possible anymore"""
+
     def parse(src, i):
         parsed = []
         while True:
@@ -60,6 +61,7 @@ def star(parser):
                 return i, parsed
             i, data = result
             parsed.append(data)
+
     return parse
 
 
@@ -76,8 +78,10 @@ def opt(parser):
 
 class defer:
     """Late binded parser. Needed for recursive parsing rules"""
+
     def __init__(self):
         self.parser = None
+
     def __call__(self, *args, **kwargs):
         self.parser(*args, **kwargs)
 
@@ -97,19 +101,30 @@ def process(f, parser):
     return parse
 
 
-def allow(values, parser):
+def cond(f, parser):
+    """Apply a filter"""
+
     def parse(src, i):
         result = parser(src, i)
-        if result is None:
-            return None
-        i, data = result
-        if data in values:
-            return i, data
+        if result is not None:
+            i, data = result
+            if f(data):
+                return i, data
+
+    return parse
 
 
 """
 Custom combinators to ease parser development
 """
+
+
+def allow(values, parser):
+    return cond(lambda x: x in values, parser)
+
+
+def blacklist(values, parser):
+    return cond(lambda x: x not in values, parser)
 
 
 def keyword(word):
