@@ -60,6 +60,15 @@ def oneof(*parsers):
     return parse
 
 
+def opt(parser):
+    def parse(src, i):
+        result = parser(src, i)
+        if result is None:
+            # successfully parsed nothing
+            return i, None
+        return result
+
+
 """
 Custom combinators to ease parser development
 """
