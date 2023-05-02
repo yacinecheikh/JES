@@ -139,3 +139,7 @@ def keyword(word):
         letters.append(allow([ch], basechar))
 
     return concat(*letters)
+
+
+def tag(t, parser):
+    return process(lambda data: (t, data))
