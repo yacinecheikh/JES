@@ -138,7 +138,10 @@ def keyword(word):
     for ch in word:
         letters.append(allow([ch], basechar))
 
-    return concat(*letters)
+    parser = concat(*letters)
+    # join the letters
+    parser = process(lambda chars: "".join(chars), parser)
+    return parser
 
 
 def tag(t, parser):
