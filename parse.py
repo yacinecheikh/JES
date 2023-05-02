@@ -6,6 +6,11 @@ Generate a syntactic tree from source code
 import parselib as lib
 from parselib import keyword, oneof, opt, many, star, concat, cond, tag
 
+
+def parse(p, source):
+    return p(source, 0)
+
+
 """
 static lexer tokens 
 """
@@ -58,7 +63,7 @@ expressions
 
 expression = lib.defer()
 
-# literals: numbers, strings, arrays, objects
+# literals: numbers, strings, arrays, objects, functions, variable identifiers
 digits = [keyword(str(i)) for i in range(10)]
 digit = oneof(*digits)
 
