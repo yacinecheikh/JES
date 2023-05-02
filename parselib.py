@@ -142,4 +142,4 @@ def keyword(word):
 
 
 def tag(t, parser):
-    return process(lambda data: (t, data))
+    return process(lambda data: (t, data), parser)
