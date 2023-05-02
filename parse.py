@@ -76,4 +76,4 @@ number = cond(lambda parts: len(parts), concat(opt(integer), opt(decimal), opt(p
 
 base_expr = oneof(tag("num", number))  # literals
 
-nested_expression = concat(paren_open, softsep, expression, softsep, )
+nested_expression = concat(paren_open, softsep, expression, softsep, paren_close)
