@@ -1,0 +1,6 @@
+line_comment_content = ("\n" as "newline") or (char as "char" line_comment_content)
+line_comment = "//" line_comment_content
+
+comment = line_comment
+
+binding = "let" hardsep identifier softsep "=" softsep expression
