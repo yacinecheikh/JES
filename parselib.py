@@ -115,8 +115,12 @@ def cond(f, parser):
 
 
 """
-Custom combinators to ease parser development
+Custom parser generators to ease development
 """
+
+
+def join(parser):
+    return process(lambda chars: "".join(chars), parser)
 
 
 def allow(values, parser):
