@@ -123,6 +123,10 @@ def join(parser):
     return process(lambda chars: "".join(chars), parser)
 
 
+def select(i, parser):
+    return process(lambda elements: elements[i], parser)
+
+
 def allow(values, parser):
     return cond(lambda x: x in values, parser)
 

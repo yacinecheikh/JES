@@ -4,7 +4,9 @@ Generate a syntactic tree from source code
 """
 
 import parselib as lib
-from parselib import keyword, oneof, opt, many, star, concat, cond, tag, join, process
+from parselib import keyword, oneof, opt, many, star, concat, cond, process
+# parser result processing tools
+from parselib import select, join, tag
 
 
 def parse(p, source):
@@ -70,7 +72,9 @@ digit = oneof(*digits)
 integer = many(digit)
 integer = process(int, join(integer))  # ["5", "8"] -> 58
 decimal = concat(dot, integer)
+decimal = select(1, decimal)
 power = concat(keyword("e"), integer)
+power = select(1, power)
 
 # a literal integer can follow these syntaxes:
 # 1 (at least integer part)
