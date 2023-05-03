@@ -76,13 +76,20 @@ decimal = select(1, decimal)
 power = concat(keyword("e"), integer)
 power = select(1, power)
 
-# a literal integer can follow these syntaxes:
+# a literal number can follow these syntaxes:
 # 1 (at least integer part)
 # .5 (at least decimal part)
 # 1e5 (integer part with power)
 # .5e4 (decimal part with power)
 # however, e5 is read as the variable identifier "e5" (due to parsing precedence)
 number = cond(lambda parts: len(parts) >= 0, concat(opt(integer), opt(decimal), opt(power)))
+
+
+# identifiers
+letter = cond(str.isalpha, lib.basechar)
+identifier = concat(join(many(letter)), join(many(digit)))
+identifier = process(lambda elts: elts[0] + elts[1], identifier)  # ["x", "1"] -> "x1"
+
 
 base_expr = oneof(tag("num", number))  # literals
 
